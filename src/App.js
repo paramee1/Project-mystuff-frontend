@@ -1,23 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { Switch, Route, Redirect } from "react-router-dom";
+import Footer from "./components/Footer";
+import Navbar from "./components/Navbar";
+import { useContext } from "react";
+import { UserContext } from "./context/userContext";
+import routes from "./config/route";
 
 function App() {
+  const { user } = useContext(UserContext);
+  const role = user?.role ? user.role : "guest";
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Navbar />
+      <Switch>
+        {routes[role].route.map(item => (
+          <Route key={item.path} exact={item.exact} path={item.path} component={item.component} />
+        ))}
+        <Redirect to={routes[role].redirect} />
+      </Switch>
+      <Footer />
     </div>
   );
 }
