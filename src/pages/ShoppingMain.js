@@ -23,8 +23,8 @@ function ShoppingMain() {
         <Sidebar />
         <CategoriesBar />
         <div className="bot">
-          {allProduct.map(items => (
-            <Card key={items.id} items={items} />
+          {allProduct.map((items, index) => (
+            <Card key={index} items={items} />
           ))}
         </div>
       </Section>

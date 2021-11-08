@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import Select from "react-select";
 import styled from "styled-components";
 import axios from "../config/axios";
@@ -42,6 +43,8 @@ const ConfirmOrder = styled.div`
 
 function Confirm() {
   const { cartItem, total } = useContext(UserContext);
+  const history = useHistory();
+  const { orderId } = useParams();
 
   const arr = [];
   cartItem.map(item => {
@@ -56,8 +59,21 @@ function Confirm() {
   const handleConfirm = () => {
     try {
       arr.map(item => {
-        axios.post("/cart/confirm", { productId: item.id, total: item.price }).then(res => console.log(res));
+        axios.post("/cart/confirm", { productId: item.id, total: item.price, orderId }).then(res => console.log(res));
+        axios.delete(`/cart/${item.id}`).then(res => console.log(res));
       });
+      alert("Your order has created");
+      history.push("/profile");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleCancle = () => {
+    try {
+      axios.delete(`/cart/checkout`).then(res => console.log(res));
+      alert("Canceled");
+      history.push("/cart");
     } catch (err) {
       console.log(err);
     }
@@ -87,7 +103,7 @@ function Confirm() {
           </div>
         </div>
         <div className="bot">
-          <button type="button" className="cancel btn-">
+          <button type="button" className="cancel btn-" onClick={handleCancle}>
             CANCEL
           </button>
           <button type="button" className="btn-" onClick={handleConfirm}>

@@ -10,13 +10,15 @@ import AddAddress from "../components/AddAddress";
 import AddProduct from "../components/AddProduct";
 import AddCategory from "../components/AddCategory";
 import AddPayment from "../components/AddPayment";
+import CustomerOrderTable from "../components/CustomerOrderTable";
+import CustomerOrderItem from "../components/CustomerOrderItem";
 
 const CardProfile = styled.div`
   .container {
     display: flex;
     justify-content: space-between;
     width: 90%;
-    margin: 0 auto 130px;
+    margin: 0 auto 200px;
   }
 `;
 
@@ -35,6 +37,8 @@ function Profile() {
             <Route path={`${path}/addpayment`} component={AddPayment} />
             <Route exact path={`${path}/addproduct`} component={AddProduct} />
             <Route path={`${path}/addproduct/addcategory`} component={AddCategory} />
+            <Route path={`${path}/customerorder/:orderId`} component={CustomerOrderItem} />
+            <Route path={`${path}/customerorder`} exact component={CustomerOrderTable} />
             <ProfileOrther />
           </div>
         </Section>

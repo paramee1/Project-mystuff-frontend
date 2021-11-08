@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link, useRouteMatch } from "react-router-dom";
 import axios from "../config/axios";
-import _ from "lodash";
 import { isEmpty } from "validator";
 import Notification from "./Notification";
 
@@ -103,8 +102,10 @@ function AddProduct() {
       setSelectFiles(cur => cur.concat(filesArray));
       Array.from(event.target.files).map(file => URL.revokeObjectURL(file));
     }
-    setUrl1(event.target.files);
+    setUrl1(cur => [...cur, ...event.target.files]);
   };
+
+  console.log(url1);
 
   const handleSubmitProduct = async event => {
     event.preventDefault();
@@ -131,7 +132,7 @@ function AddProduct() {
       formData.append("price", price);
       formData.append("quantity", quantity);
       formData.append("categoryId", categoryId);
-      _.forEach(url1, file => {
+      url1.forEach(file => {
         formData.append("cloudinput", file);
       });
       await axios.post("/product", formData);

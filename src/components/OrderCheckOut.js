@@ -72,8 +72,9 @@ function OrderCheckOut() {
       if (addressId === 0) {
         return alert("please select your address");
       }
-      await axios.post("/cart/checkout", { userAddressId: addressId });
-      history.push("/confirm");
+      const res = await axios.post("/cart/checkout", { userAddressId: addressId });
+      console.log(res.data.order.id);
+      history.push(`/confirm/${res.data.order.id}`);
     } catch (err) {
       console.log(err);
     }

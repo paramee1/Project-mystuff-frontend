@@ -35,25 +35,40 @@ function ProfileMenu() {
 
   return (
     <Profile>
-      <h4>
-        <Link to={`${url}`} className="profile">
-          YOUR ORDER
-        </Link>
-      </h4>
-      <h4>
-        <Link to={`${url}/address`} className="address">
-          ADDRESS
-        </Link>
-      </h4>
-      <h4>
-        <Link to={`${url}/addpayment`} className="addpayment">
-          ADD PAYMENT
-        </Link>
-      </h4>
+      {user.role === "user" ? (
+        <>
+          <h4>
+            <Link to={`${url}`} className="profile">
+              YOUR ORDER
+            </Link>
+          </h4>
+          <h4>
+            <Link to={`${url}/address`} className="address">
+              ADDRESS
+            </Link>
+          </h4>
+          <h4>
+            <Link to={`${url}/addpayment`} className="addpayment">
+              ADD PAYMENT
+            </Link>
+          </h4>
+        </>
+      ) : (
+        <></>
+      )}
       {user.role === "admin" ? (
         <h4>
           <Link to={`${url}/addproduct`} className="add">
             ADD PRODUCT
+          </Link>
+        </h4>
+      ) : (
+        <></>
+      )}
+      {user.role === "admin" ? (
+        <h4>
+          <Link to={`${url}/customerorder`} className="customerorder">
+            CUSTOMER ORDER
           </Link>
         </h4>
       ) : (
